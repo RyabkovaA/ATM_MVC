@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ATMForms6
 {
-    public class ATMModel
+    public class ATMModel : Observable
     {
-        public event Action StateChanged;
         private int balance;
         private string state;
         private bool isConnected;
@@ -26,7 +25,7 @@ namespace ATMForms6
             private set
             {
                 balance = value;
-                StateChanged?.Invoke();
+                NotifyObservers();
             }
         }
 
@@ -36,7 +35,7 @@ namespace ATMForms6
             private set
             {
                 state = value;
-                StateChanged?.Invoke();
+                NotifyObservers();
             }
         }
 
@@ -58,7 +57,7 @@ namespace ATMForms6
         public void SetState(string newState)
         {
             State = newState;
-            StateChanged?.Invoke();
+            NotifyObservers();
         }
 
         public bool Authenticate(int pin)
@@ -80,7 +79,8 @@ namespace ATMForms6
                 State = "Аутентификация успешна. Снято: " + amount;
             }
             else if (balance == amount)
-            { 
+            {
+                Balance -= amount;
                 State = "Заблокирован. Снято: " + amount;
             }
             else

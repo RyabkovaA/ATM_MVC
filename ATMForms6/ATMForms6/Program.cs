@@ -15,7 +15,7 @@ namespace ATMForms6
             ATMModel model = new ATMModel();
             ATMView view = new ATMView();
             ATMController controller = new ATMController(model, view);
-            view.UpdateView(model.State, model.Balance, model.IsConnected);
+            view.SetModel(model);
             Application.Run(view);
         }
     }

@@ -18,8 +18,7 @@ namespace ATMForms6
             this.view = view;
             this.view.SetController(this);
 
-            // Подписываем представление на изменения модели
-            model.StateChanged += OnStateChanged;
+            //model.StateChanged += OnStateChanged;
 
         }
 

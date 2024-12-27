@@ -1,8 +1,9 @@
 namespace ATMForms6
 {
-    public partial class ATMView : Form
+    public partial class ATMView : Form, IObserver
     {
         private ATMController controller;
+        private ATMModel model;
 
         public ATMView()
         {
@@ -15,6 +16,12 @@ namespace ATMForms6
             this.controller = controller;
         }
 
+        public void SetModel(ATMModel model)
+        {
+            this.model = model;
+            model.AddObserver(this);
+        }
+
         private void InitializeState()
         {
             lblBalance.Visible = false;
@@ -24,6 +31,11 @@ namespace ATMForms6
             btnEnterPin.Visible = true;
             lblState.Text = "¬ведите PIN";
             txtPin.Clear();
+        }
+
+        public void Update()
+        {
+            UpdateView(model.State, model.Balance, model.IsConnected);
         }
 
         public void UpdateView(string state, int balance, bool isConnected)
